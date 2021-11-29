@@ -76,7 +76,7 @@ const slidermainparticle= () => (
           </div>
           <div className="col-md-6">
             <Reveal className='onStep d-inline' keyframes={inline} delay={300} duration={1200} triggerOnce>
-                
+              <img src="./img/misc/women-with-vr.png" className="img-fluid" alt=""/>
             </Reveal>
           </div>
       </div>
@@ -85,4 +85,4 @@ const slidermainparticle= () => (
 export default slidermainparticle;
 
 //xs-hide
-//<img src="./img/misc/women-with-vr.png" className="img-fluid" alt=""/>
+//
