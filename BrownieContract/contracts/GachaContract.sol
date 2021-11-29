@@ -32,14 +32,7 @@ contract Gacha is VRFConsumerBase, Ownable {
 
     event GachaRolled(bytes32 indexed requestId, address indexed roller);
     event GachaResult(bytes32 indexed requestId, uint256 indexed result);
-    /**
-     * Constructor inherits VRFConsumerBase
-     * 
-     * Network: Kovan
-     * Chainlink VRF Coordinator address: 0xdD3782915140c8f3b190B5D67eAc6dc5760C46E9
-     * LINK token address:                0xa36085F69e2889c224210F603D836748e7dC0088
-     * Key Hash: 0x6c3699283bda56ad74f6b855546325b68d482e983852a7a82979cc4807b641f4
-     */
+  
      
     constructor(bytes32 _keyhash, address _vrfCoordinator, address _linkToken, uint256 _fee, uint256[] memory arrayOfItemDropChance, uint256[] memory arr_ID, address OwnerContract, address NFT_address, uint256 _keyId) 
         VRFConsumerBase(
