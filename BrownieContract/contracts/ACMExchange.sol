@@ -12,9 +12,9 @@ have more than amount tokens in their balance
 allowed TokenSwap to withdraw amount tokens by calling appro */
 
 contract ACMExchange is Ownable{
-    IERC20 public ACMtoken;
-    IERC1155 public ACMnftToken;
-    address public owner;
+    IERC20 public ACMtoken; //ERC20 Token
+    IERC1155 public ACMnftToken;// ERC1155 Token
+    address public owner; //Address of the owner of the token
     uint public amount;
     
 
@@ -24,7 +24,6 @@ contract ACMExchange is Ownable{
     constructor(
         address _token,
         address _owner,
-        uint _amount,
         address _nftToken,
         uint256[] _allowTokenId,
         uint256[] _tokenPrice
@@ -32,7 +31,6 @@ contract ACMExchange is Ownable{
     {
         ACMtoken = IERC20(_token);
         owner = _owner;
-        amount = _amount;
         ACMnftToken = IERC1155(_nftToken);
         for(i=0;i<_allowTokenId.length;i++){
             allowTokenId[_allowTokenId[i]] = true;
@@ -51,12 +49,12 @@ contract ACMExchange is Ownable{
         require(ACMtoken.balanceOf(msg.sender) > 0);
         require(allowTokenId[tokenId] == true, "This tokenId were not allow to purchase");
         require(tokenPrice[tokenId] != 0, "Price of this token have not been set yet");
-        require(ACMToken.allowance(owner1, address(this)) >= amount, "Please allow the contract to spend your token");
+        require(ACMtoken.allowance(owner, address(this)) >= amount, "Please allow the contract to spend your token");
         require(ACMnftToken.isApprovedForAll(msg.sender, address(this)), "contract must approve");
 
         //pay with ERC20 token first
         //Transfer NFTs token to user
-        safeTransferFrom(ACMToken, msg.sender, owner, amount * tokenPrice[tokenId]);
+        safeTransferFrom(ACMtoken, msg.sender, owner, amount * tokenPrice[tokenId]);
         ACMnftToken.safeTransferFrom(owner, msg.sender, tokenId, amount, "");
     }
 }
