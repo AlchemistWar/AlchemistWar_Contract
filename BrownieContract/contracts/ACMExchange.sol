@@ -25,8 +25,7 @@ contract ACMExchange is Ownable{
         address _token,
         address _owner,
         address _nftToken,
-        uint256[] _allowTokenId,
-        uint256[] _tokenPrice
+        uint256[] _allowTokenId
     ) 
     {
         ACMtoken = IERC20(_token);
