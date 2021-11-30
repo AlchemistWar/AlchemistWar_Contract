@@ -132,11 +132,12 @@ const styles = {
 
 
 function CheckAuthenticate() {
-  const { authenticate, isAuthenticated, logout, isAuthenticating, signup  } = useMoralis();
+  const { authenticate, isAuthenticated, logout, isAuthenticating, signup, user, setUserData, userError, isUserUpdating } = useMoralis();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+
 
   if (!isAuthenticated) {
     return (
@@ -177,19 +178,24 @@ function CheckAuthenticate() {
         
             <h1 className='text-center'>Setup email address</h1>
             <div className="box-login">
+              {userError && <p>{userError.message}</p>}
               <h3 className="mb10">Sign up</h3>
               <form name="contactForm" id='contact_form' className="form-border" action='#'>
 
                   <div className="field-set">
-                      <input type='text' name='email' id='email' className="form-control" placeholder="email"/>
+                      <input type='text' name='email' id='email' className="form-control" placeholder="email" value={email} onChange={(e) => setEmail(e.currentTarget.value)}/>
                   </div>
                 
                  <div className="field-set">
-                      <input type='password' name='password' id='password' className="form-control" placeholder="password"/>
+                      <input type='password' name='password' id='password' className="form-control" placeholder="password" value={password} onChange={(e) => setPassword(e.currentTarget.value)}/>
                   </div>
-                
+              
                 <div className="field-set">
-                  <input type='submit' id='send_message' value='Submit' className="btn-main inline lead"/>
+                  <input type='submit' id='send_message' value='Submit' className="btn-main inline lead" onClick={() => setUserData({
+                    username: email,
+                    email: email,
+                    password: password,
+                  })} disabled={isUserUpdating}/>
                   
                 </div>
                 <div className="clearfix"></div>  
