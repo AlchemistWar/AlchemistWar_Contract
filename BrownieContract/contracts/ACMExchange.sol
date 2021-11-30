@@ -11,7 +11,7 @@ For transferFrom to succeed, sender must
 have more than amount tokens in their balance
 allowed TokenSwap to withdraw amount tokens by calling appro */
 
-contract ACMTokenSwap is Ownable{
+contract ACMExchange is Ownable{
     IERC20 public ACMtoken;
     IERC1155 public ACMnftToken;
     address public owner;
