@@ -11,7 +11,7 @@ def deploy_ACMExchange():
     OwnerContract = "0x2E896EDcEeB8e21f9899fa2fD86D3Bdd0a15D93E"
     Token_Address = "0x4eE0fe837C06741f7c1551819d3bd2E660265524"
     NFT_Address = "0xc9c64cd8F0B84eb8239Bf61116f17DB0C78aF2E5"
-    allow_TokenId = input("Allow tokenId: ")
+    allow_TokenId = [0]
 
     return ACMExchange.deploy(
         Token_Address,
