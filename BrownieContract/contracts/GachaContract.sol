@@ -109,7 +109,6 @@ contract Gacha is VRFConsumerBase, Ownable {
         s_rollers[requestId] = msg.sender; // mapping requestId with roller address
         s_results[msg.sender] = ROLL_IN_PROGRESS;
         emit GachaRolled(requestId, msg.sender);
-
     }
 
 
