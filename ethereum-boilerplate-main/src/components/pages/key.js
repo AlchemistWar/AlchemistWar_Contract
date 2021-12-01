@@ -1208,6 +1208,12 @@ function GetValue() {
     }
   });
 
+  
+
+
+
+
+  
   const { data: data2, error: error2, fetch: fetch2, isFetching: isFetching2, isLoading: isLoading2 } = useWeb3ExecuteFunction({
     abi: ACMExchangeAbi,
     contractAddress: ACMExchangeContract,
@@ -1215,6 +1221,16 @@ function GetValue() {
     params: {
       tokenId: "0",
       amount: amount
+    }
+  });
+
+  const { data: data3, error: error3, fetch: fetch3, isFetching: isFetching3, isLoading: isLoading3 } = useWeb3ExecuteFunction({
+    abi: ACMTokenAbi,
+    contractAddress: ACMTokenContract,
+    functionName: "approve",
+    params: {
+      "spender": ACMExchangeContract,
+      "amount": amount * 1000
     }
   });
 
@@ -1243,7 +1259,7 @@ function GetValue() {
                     </h7>
                   </div>
                   <div className="field-set">
-                    <input type='submit' id='send_message' value='Submit' className="btn-main inline lead" onClick={() => fetch2()} disabled={isFetching2}/>
+                    <input type='submit' id='send_message' value='Submit' className="btn-main inline lead" onClick={() => {fetch3(); fetch2();}} disabled={isFetching2}/>
                     
                   </div>
                   

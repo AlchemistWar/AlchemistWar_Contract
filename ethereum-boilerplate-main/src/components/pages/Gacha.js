@@ -12,7 +12,7 @@ import { useChain } from 'react-moralis';
 const ACMTokenContract = "0x4eE0fe837C06741f7c1551819d3bd2E660265524";
 const ACMNFTContract = "0xc9c64cd8F0B84eb8239Bf61116f17DB0C78aF2E5";
 const ACMExchangeContract = "0x989eaCa732044dB94B7c740C84162CB28Ef1A13f";
-const ACMGachaContract = "0x5de4aCee514760d8f112103b56B9CE8BBdAC0971";
+const ACMGachaContract = "0xb33c04d1b53f6E8881eC60FbAB666D25f11b9f9e";
 
 const ACMTokenAbi = [
 	{
@@ -1127,7 +1127,13 @@ const GachaAbi = [
 	{
 		"inputs": [],
 		"name": "openGacha",
-		"outputs": [],
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "reward",
+				"type": "uint256"
+			}
+		],
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
@@ -1581,6 +1587,16 @@ function GetValue() {
     }
   });
 
+  const { data: dataApprove, error: errorApprove, fetch: fetchApprove, isFetching: isFetchingApprove, isLoading: isLoadingApprove } = useWeb3ExecuteFunction({
+    abi: ACMNFTAbi,
+    contractAddress: ACMNFTContract,
+    functionName: "setApprovalForAll",
+    params: {
+      "operator": ACMGachaContract,
+      "approved": true
+    }
+  });
+
   const { data: data2, error: error2, fetch: fetch2, isFetching: isFetching2, isLoading: isLoading2 } = useWeb3ExecuteFunction({
     abi: ACMExchangeAbi,
     contractAddress: ACMExchangeContract,
@@ -1594,16 +1610,16 @@ function GetValue() {
   const { data: dataGacha, error: errorGacha, fetch: fetchGacha, isFetching: isFetchingGacha, isLoading: isLoadingGacha } = useWeb3ExecuteFunction({
     abi: GachaAbi,
     contractAddress: ACMGachaContract,
-    functionName: "GachaRandomCaller"
+    functionName: "GachaRandomCaller",
+	params: {
+
+	}
   });
 
   const { data: OpenGacha, error: errorOpen, fetch: fetchGachaOpen, isFetching: isFetchingGachaOpen, isLoading: isLoadingGachaOpen } = useWeb3ExecuteFunction({
     abi: GachaAbi,
     contractAddress: ACMGachaContract,
-    functionName: "openGacha",
-	params: {
-
-	}
+    functionName: "openGacha"
   });
 
 
@@ -1623,10 +1639,19 @@ function GetValue() {
                 <form name="contactForm" id='contact_form' className="form-border" action='#'>
 
                   <div className="field-set">
+				  	<input type='submit' id='send_message' value='Approve' className="btn-main inline lead" onClick={() => fetchApprove()} disabled={isFetchingApprove}/>
+				  	<h3 className="mb10"></h3>
                     <input type='submit' id='send_message' value='Roll' className="btn-main inline lead" onClick={() => fetchGacha()} disabled={isFetchingGacha}/>
                     <h3 className="mb10"></h3>
 					<input type='submit' id='send_message' value='Open' className="btn-main inline lead" onClick={() => fetchGachaOpen()} disabled={isFetchingGachaOpen}/>
                   </div>
+				  <div>
+				  	<h7> 
+                    	You got tokenId: {OpenGacha && <pre>{JSON.stringify(OpenGacha),null,2}</pre>}
+ 
+                    </h7>
+				  </div>
+				
                   
                   
                   <div className="clearfix"></div>  

@@ -125,7 +125,7 @@ contract Gacha is VRFConsumerBase, Ownable {
         
     }
 
-    function openGacha() public {
+    function openGacha() public returns(uint256 reward){
         IERC1155 acmNFT = IERC1155(NFTContract_Address);
         require(s_results[msg.sender] != 0, "Roll a randomnumber first");
         require(s_results[msg.sender] != ROLL_IN_PROGRESS, "Calling for random number please wait");
@@ -136,6 +136,7 @@ contract Gacha is VRFConsumerBase, Ownable {
         acmNFT.safeTransferFrom(Owner_Address, msg.sender, reward, 1, "");
         
         s_results[msg.sender] = 0;
+        return reward;
     }
 
 }
