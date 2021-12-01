@@ -23,6 +23,7 @@ import MenuItems from "./components/MenuItems"; */
 import Home2 from './pages/home2';
 import Wallet from './pages/wallet';
 import Key from './pages/key';
+import Gacha from "./pages/Gacha";
 import ScrollToTopBtn from './menu/ScrollToTop';
 
 import { createGlobalStyle } from 'styled-components';
@@ -77,6 +78,7 @@ const App = ({ isServerInfo }) => {
               </Home2>
               <Wallet path="/wallet" />
               <Key path="/key" />
+              <Gacha path="/gacha" />
               </ScrollTop>
             </PosedRouter>
           <ScrollToTopBtn />

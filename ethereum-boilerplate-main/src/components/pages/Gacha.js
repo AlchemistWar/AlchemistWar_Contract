@@ -12,6 +12,7 @@ import { useChain } from 'react-moralis';
 const ACMTokenContract = "0x4eE0fe837C06741f7c1551819d3bd2E660265524";
 const ACMNFTContract = "0xc9c64cd8F0B84eb8239Bf61116f17DB0C78aF2E5";
 const ACMExchangeContract = "0x989eaCa732044dB94B7c740C84162CB28Ef1A13f";
+const ACMGachaContract = "0x5de4aCee514760d8f112103b56B9CE8BBdAC0971";
 
 const ACMTokenAbi = [
 	{
@@ -1090,6 +1091,378 @@ const ACMExchangeAbi = [
 	}
 ];
 
+const GachaAbi = [
+	{
+		"inputs": [
+			{
+				"internalType": "uint256[]",
+				"name": "arr",
+				"type": "uint256[]"
+			}
+		],
+		"name": "calcSum",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "sum",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "GachaRandomCaller",
+		"outputs": [
+			{
+				"internalType": "bytes32",
+				"name": "requestId",
+				"type": "bytes32"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "openGacha",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "bytes32",
+				"name": "requestId",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "uint256",
+				"name": "randomness",
+				"type": "uint256"
+			}
+		],
+		"name": "rawFulfillRandomness",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "bytes32",
+				"name": "_keyhash",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "address",
+				"name": "_vrfCoordinator",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_linkToken",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_fee",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "arrayOfItemDropChance",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "arr_ID",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "address",
+				"name": "OwnerContract",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "NFT_address",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_keyId",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "bytes32",
+				"name": "requestId",
+				"type": "bytes32"
+			},
+			{
+				"indexed": true,
+				"internalType": "uint256",
+				"name": "result",
+				"type": "uint256"
+			}
+		],
+		"name": "GachaResult",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "bytes32",
+				"name": "requestId",
+				"type": "bytes32"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "roller",
+				"type": "address"
+			}
+		],
+		"name": "GachaRolled",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "previousOwner",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "newOwner",
+				"type": "address"
+			}
+		],
+		"name": "OwnershipTransferred",
+		"type": "event"
+	},
+	{
+		"inputs": [],
+		"name": "renounceOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256[]",
+				"name": "arr",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "uint256",
+				"name": "randomness",
+				"type": "uint256"
+			}
+		],
+		"name": "sample",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "index",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256[]",
+				"name": "arrayOfItemDropChance",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "arr_ID",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "address",
+				"name": "OwnerContract",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "NFT_address",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_keyId",
+				"type": "uint256"
+			}
+		],
+		"name": "setGachaItemProperties",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "newOwner",
+				"type": "address"
+			}
+		],
+		"name": "transferOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "itemDropChance",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "KeyId",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "NFTContract_Address",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "NumberOfItem",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "owner",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "Owner_Address",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "randomResult",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "rewardID",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	}
+];
+
 const GlobalStyles = createGlobalStyle`
   header#myHeader .logo .d-block{
     display: none !important;
@@ -1188,7 +1561,7 @@ const GlobalStyles = createGlobalStyle`
     }
   .box-login{
     border-radius: 3px;
-    padding: 40px 160px;
+    padding: 40px 860px;
   }
   }
 `;
@@ -1218,6 +1591,21 @@ function GetValue() {
     }
   });
 
+  const { data: dataGacha, error: errorGacha, fetch: fetchGacha, isFetching: isFetchingGacha, isLoading: isLoadingGacha } = useWeb3ExecuteFunction({
+    abi: GachaAbi,
+    contractAddress: ACMGachaContract,
+    functionName: "GachaRandomCaller"
+  });
+
+  const { data: OpenGacha, error: errorOpen, fetch: fetchGachaOpen, isFetching: isFetchingGachaOpen, isLoading: isLoadingGachaOpen } = useWeb3ExecuteFunction({
+    abi: GachaAbi,
+    contractAddress: ACMGachaContract,
+    functionName: "openGacha",
+	params: {
+
+	}
+  });
+
 
 //, fetch()  disabled={isFetching}
   return (
@@ -1228,23 +1616,16 @@ function GetValue() {
         <div className='container'>
           <div className='row m-10-hor'>
             <div className='col-12'>
-              <h1 className='text-center'>Ticket store</h1>
+              <h1 className='text-center'>Gacha Lottery</h1>
               <Account className='text-center' />
               <div className="box-login">
-                <h3 className="mb10">Enter amount of ticket to buy</h3>
+                <h3 className="mb10">Press the button to roll</h3>
                 <form name="contactForm" id='contact_form' className="form-border" action='#'>
+
                   <div className="field-set">
-                      <input type='text' name='Amount' id='Amount' className="form-control" placeholder="Amount" value={amount} onMouseLeave={() => fetch() }  onChange={(e) => setAmount(e.currentTarget.value)} disabled={isFetching} />
-                  </div>
-                  <div>
-                    <h7> 
-                      Total price = {data * amount} ACM Token
-                      
-                    </h7>
-                  </div>
-                  <div className="field-set">
-                    <input type='submit' id='send_message' value='Submit' className="btn-main inline lead" onClick={() => fetch2()} disabled={isFetching2}/>
-                    
+                    <input type='submit' id='send_message' value='Roll' className="btn-main inline lead" onClick={() => fetchGacha()} disabled={isFetchingGacha}/>
+                    <h3 className="mb10"></h3>
+					<input type='submit' id='send_message' value='Open' className="btn-main inline lead" onClick={() => fetchGachaOpen()} disabled={isFetchingGachaOpen}/>
                   </div>
                   
                   
@@ -1267,7 +1648,7 @@ function GetValue() {
 
 }
 
-const Key= () => (
+const Gacha= () => (
   
   <div>
   <GlobalStyles/>
@@ -1284,4 +1665,4 @@ const Key= () => (
   </div>
   
 );
-export default Key;
+export default Gacha;
