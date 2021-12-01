@@ -116,9 +116,9 @@ const Header= function() {
               </div>
           </div>
 
-          {/* <div className='search'>
+          <div className='search'>
             <input id="quick_search" className="xs-hide" name="quick_search" placeholder="search item here..." type="text" />
-          </div>  */}
+          </div> 
                     
               <BreakpointProvider>
                 <Breakpoint l down>
@@ -230,6 +230,7 @@ const Header= function() {
                             <div className='item-dropdown'>
                               <div className="dropdown" onClick={closeMenu}>
                                 <NavLink to="/key">Key</NavLink>
+                                <NavLink to="/gacha">Gacha</NavLink>
                               </div>
                             </div>
                           )}
